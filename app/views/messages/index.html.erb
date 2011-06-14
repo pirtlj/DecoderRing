@@ -1,0 +1,39 @@
+<br>
+<br>
+Step 1: Drag this link into your bookmark bar -> <a href="javascript:(function(){
+	insert_script=document.createElement('SCRIPT');
+	insert_script.type='text/javascript';
+	insert_script.src='<%=bookmarklet_js_url(:format => :js)%>';
+	document.getElementsByTagName('head')[0].appendChild(insert_script);
+	})();" style="border: 2px solid #999; font-weight: bold;">Decoder-Ring</a>
+<br>
+<br>
+
+
+<h1>Listing messages</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Value</th>
+    <th>Code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @messages.each do |message| %>
+  <tr>
+    <td><%= message.user_id %></td>
+    <td><%= message.value %></td>
+    <td><%= message.code %></td>
+    <td><%= link_to 'Show', message %></td>
+    <td><%= link_to 'Edit', edit_message_path(message) %></td>
+    <td><%= link_to 'Destroy', message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Message', new_message_path %>

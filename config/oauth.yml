@@ -1,0 +1,17 @@
+#all the oauth keys you would ever need -JosephP
+
+
+development:
+    facebook:
+        app_id: 220967857923167 #DecoderRing-Test
+        secret_key: 78782dcfea67ca538880a809ddde0da0
+            
+test:
+    facebook:
+        app_id: 220967857923167 #DecoderRing-Test
+        secret_key: 78782dcfea67ca538880a809ddde0da0
+
+production:
+    facebook:
+        app_id: 220967857923167 #DecoderRing-Test
+        secret_key: 78782dcfea67ca538880a809ddde0da0
