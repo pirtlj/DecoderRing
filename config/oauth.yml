@@ -13,5 +13,5 @@ test:
 
 production:
     facebook:
-        app_id: 228780290468124 #DecoderRing-Test
+        app_id: 228780290468124 #DecoderRing
         secret_key: 974a9bea01c131aca6bf42b2e13b0dd4

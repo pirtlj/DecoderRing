@@ -51,16 +51,11 @@ function decodeMessage(searchText, searchNode) {
             continue;
         }
 
-		
-		var messageId = currentNode.data.match(/(?!Code Message #)\b\d+\b(?= :)/);
+		var messageId = currentNode.data.match(regex);
 		GetMessage(messageId, currentNode);
     }
 }
 
-decodeMessage(/(?!Code Message #)\b\d+\b(?= :)/);
-
-
-
-alert("NO ERROR");
+decodeMessage(<%=Message.code_regex%>);
 
 
