@@ -1,25 +1,20 @@
-function findAndReplace(searchText, replacement, searchNode) {
-    if (!searchText || typeof replacement === 'undefined') {
-        // Throw error here if you want...
-        return;
-    }
-    var regex = typeof searchText === 'string' ?
-                new RegExp(searchText, 'g') : searchText,
-        childNodes = (searchNode || document.body).childNodes,
-        cnLength = childNodes.length,
-        excludes = 'html,head,style,title,link,meta,script,object,iframe';
-    while (cnLength--) {
-        var currentNode = childNodes[cnLength];
-        if (currentNode.nodeType === 1 &&
-            (excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
-            arguments.callee(searchText, replacement, currentNode);
-        }
-        if (currentNode.nodeType !== 3 || !regex.test(currentNode.data) ) {
-            continue;
-        }
+
+var xmlHttp = null;
+
+function GetMessage(id, currentNode)
+{
+    var Url = "<%=messages_url()%>/" + id + ".json?auth_token=<%=current_user.authentication_token%>";
+
+	var xmlhttp = new XMLHttpRequest();
+	  
+	xmlhttp.onreadystatechange = function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+		var message = eval('(' + xmlhttp.responseText + ')').message;
         var parent = currentNode.parentNode,
             frag = (function(){
-                var html = currentNode.data.replace(regex, replacement),
+                var html = "Secret Message: " + message.value,
                     wrap = document.createElement('div'),
                     frag = document.createDocumentFragment();
                 wrap.innerHTML = html;
@@ -30,7 +25,42 @@ function findAndReplace(searchText, replacement, searchNode) {
             })();
         parent.insertBefore(frag, currentNode);
         parent.removeChild(currentNode);
+	    }
+	  }
+	xmlhttp.open("GET",Url,true);
+	xmlhttp.send();
+}
+
+
+
+function decodeMessage(searchText, searchNode) {
+    if (!searchText) {
+        // Throw error here if you want...
+        return;
+    }
+    var regex = typeof searchText === 'string' ? new RegExp(searchText, 'g') : searchText,
+        childNodes = (searchNode || document.body).childNodes,
+        cnLength = childNodes.length,
+        excludes = 'html,head,style,title,link,meta,script,object,iframe';
+    while (cnLength--) {
+        var currentNode = childNodes[cnLength];
+        if (currentNode.nodeType === 1 && (excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
+            arguments.callee(searchText, currentNode);
+        }
+        if (currentNode.nodeType !== 3 || !regex.test(currentNode.data) ) {
+            continue;
+        }
+
+		
+		var messageId = currentNode.data.match(/(?!Code Message #)\b\d+\b(?= :)/);
+		GetMessage(messageId, currentNode);
     }
 }
 
-findAndReplace("message", "TEST");
+decodeMessage(/(?!Code Message #)\b\d+\b(?= :)/);
+
+
+
+alert("NO ERROR");
+
+

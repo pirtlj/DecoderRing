@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_filter :authenticate_user!, :only =>[:bookmarklet]
   def landing
     if current_user
       redirect_to user_messages_path(current_user)

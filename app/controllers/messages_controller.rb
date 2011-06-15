@@ -19,6 +19,7 @@ class MessagesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @message }
+      format.json { render :json => @message}
     end
   end
 
