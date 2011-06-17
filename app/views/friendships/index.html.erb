@@ -1,0 +1,63 @@
+<h1>Listing friendships</h1>
+<br>
+
+<%if @requested_friendships.length > 0 %>
+<h2>Requested Friendships</h2>
+<table>
+  <tr>
+    <th>Friend</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @requested_friendships.each do |friendship| %>
+  <tr>
+    <td><%= friendship.friend.email %></td>
+    <td><%= friendship.status %></td>
+    <td><%= link_to 'Approve', approve_user_friendship_path(:user_id => current_user.id, :id => friendship.id) %></td>
+    <td><%= link_to 'Cancel', friendship, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<br>
+<%end%>
+
+
+<%if @pending_friends.length > 0 %>
+<h2>Pending Friends</h2>
+<table>
+  <tr>
+    <th>Friend</th>
+  </tr>
+
+<% @pending_friends.each do |friend| %>
+  <tr>
+    <td><%= friend.email %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%end%>
+
+<h2>Friends</h2>
+<table>
+  <tr>
+    <th>Friend</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @friendships.each do |friendship| %>
+  <tr>
+    <td><%= friendship.friend.email %></td>
+    <td><%= link_to 'Un-Friend', friendship, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+
+</table>
+<br>
+
+<%= link_to 'New Friendship', new_friendship_path %>

@@ -11,6 +11,27 @@ class User < ActiveRecord::Base
   has_many :user_tokens, :dependent => :destroy
   has_many :messages, :dependent => :destroy
   
+  #friend relations
+  
+  has_many :direct_friendships, :class_name => "Friendship"
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  
+  has_many :direct_friends, :through => :direct_friendships, :conditions => "status => :approved", :source => :friend
+  has_many :inverse_friends, :through => :inverse_friendships, :conditions => "status = approved", :source => :user
+
+  has_many :pending_friends, :through => :direct_friendships, :conditions => "friendships.status = 'pending'", :foreign_key => "user_id", :source => :user
+  has_many :requested_friendships, :class_name => "Friendship", :foreign_key => "friend_id", :conditions => "friendships.status = 'pending'"
+
+  def friends
+    direct_friends | inverse_friends
+  end
+  
+  def friendships
+    direct_friendships.where(:status => "approved") | inverse_friendships.where(:status => "approved") 
+  end
+  
+  
+  
   # Class Methods
    
   class << self

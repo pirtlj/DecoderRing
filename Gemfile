@@ -12,6 +12,7 @@ gem 'devise', "1.2.0"
 gem  'oa-oauth', '0.2.5'
 gem 'fb_graph'
 gem 'random-word-generator'
+gem "aasm", "~> 2.2.0"
 
 
 # Use unicorn as the web server

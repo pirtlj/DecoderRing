@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    aasm (2.2.0)
     abstract (1.0.0)
     actionmailer (3.0.0)
       actionpack (= 3.0.0)
@@ -118,6 +119,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm (~> 2.2.0)
   devise (= 1.2.0)
   fb_graph
   json (>= 1.4.6)

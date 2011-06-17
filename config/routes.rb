@@ -1,4 +1,6 @@
 DecoderRing::Application.routes.draw do
+  resources :friendships
+
   resources :messages
 
   get "home/landing"
@@ -7,6 +9,11 @@ DecoderRing::Application.routes.draw do
   
   resources :users, :only => [:index, :show, :edit]  do
     resources :messages
+    resources :friendships do
+      member do
+        get :approve
+      end
+    end
     member do
        get :avatar
      end
