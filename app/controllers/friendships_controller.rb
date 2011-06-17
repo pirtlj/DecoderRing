@@ -7,7 +7,7 @@ class FriendshipsController < ApplicationController
     
     @requested_friendships = current_user.requested_friendships
     
-    @pending_friends = current_user.pending_friends
+    @pending_friendships = current_user.pending_friendships
     
     @friendships = current_user.friendships
     
@@ -89,7 +89,7 @@ class FriendshipsController < ApplicationController
   end
   
   def approve
-      @friendship = Friendship.find(params[:id])
+      @friendship = current_user.inverse_friendships.find(params[:id])
       @friendship.approve!
       
       redirect_to(friendships_url, :notice => 'Friendship was successfully approved.')

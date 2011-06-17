@@ -16,11 +16,13 @@ class User < ActiveRecord::Base
   has_many :direct_friendships, :class_name => "Friendship"
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   
+  
+
   has_many :direct_friends, :through => :direct_friendships, :conditions => "status => :approved", :source => :friend
   has_many :inverse_friends, :through => :inverse_friendships, :conditions => "status = approved", :source => :user
-
-  has_many :pending_friends, :through => :direct_friendships, :conditions => "friendships.status = 'pending'", :foreign_key => "friend_id", :source => :user
-  has_many :requested_friendships, :class_name => "Friendship", :foreign_key => "user_id", :conditions => "friendships.status = 'pending'"
+\
+  has_many :requested_friendships, :class_name => "Friendship", :foreign_key => "friend_id", :conditions => "friendships.status = 'pending'"
+  has_many :pending_friendships, :class_name => "Friendship", :foreign_key => "user_id", :conditions => "friendships.status = 'pending'"
 
   def friends
     direct_friends | inverse_friends

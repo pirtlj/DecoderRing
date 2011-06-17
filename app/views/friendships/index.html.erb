@@ -13,7 +13,7 @@
 
 <% @requested_friendships.each do |friendship| %>
   <tr>
-    <td><%= friendship.friend.email %></td>
+    <td><%= friendship.user.email %></td>
     <td><%= friendship.status %></td>
     <td><%= link_to 'Approve', approve_user_friendship_path(:user_id => current_user.id, :id => friendship.id) %></td>
     <td><%= link_to 'Cancel', friendship, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -24,21 +24,25 @@
 <%end%>
 
 
-<%if @pending_friends.length > 0 %>
-<h2>Pending Friends</h2>
+<%if @pending_friendships.length > 0 %>
+<h2>Requested Friendships</h2>
 <table>
   <tr>
     <th>Friend</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
   </tr>
 
-<% @pending_friends.each do |friend| %>
+<% @pending_friendships.each do |friendship| %>
   <tr>
-    <td><%= friend.email %></td>
+    <td><%= friendship.friend.email %></td>
+    <td><%= friendship.status %></td>
+    <td><%= link_to 'Cancel', friendship, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
+<br>
 <%end%>
 
 <h2>Friends</h2>
