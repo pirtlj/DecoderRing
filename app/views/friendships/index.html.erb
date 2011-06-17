@@ -25,19 +25,16 @@
 
 
 <%if @pending_friendships.length > 0 %>
-<h2>Requested Friendships</h2>
+<h2>Pending Friendships</h2>
 <table>
   <tr>
     <th>Friend</th>
-    <th>Status</th>
-    <th></th>
     <th></th>
   </tr>
 
 <% @pending_friendships.each do |friendship| %>
   <tr>
     <td><%= friendship.friend.email %></td>
-    <td><%= friendship.status %></td>
     <td><%= link_to 'Cancel', friendship, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
