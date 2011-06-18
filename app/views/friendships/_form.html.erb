@@ -13,7 +13,9 @@
 
   <div class="field">
     <%= f.label :friend_id %><br />
-    <%= f.select :friend_id, User.where("id != #{current_user.id}").all.collect{|u| [u.email, u.id] } %>
+	
+    <%= f.select :friend_id, User.all.collect{|u| [u.email, u.id] } %>
+    <%#f.select :friend_id, User.where("id != #{current_user.id}").all.collect{|u| [u.email, u.id] } %>
   </div>
 
   <div class="actions">

@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.xml
   def index
-    @messages = Message.all
+    @messages = current_user.messages
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,11 +14,16 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.xml
   def show
-    @message = Message.find(params[:id])
+    @message = current_user.authorized_messages.exists?(params[:id]) ? current_user.authorized_messages.find(params[:id]) : nil
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @message }
+      format.html {
+        if @message
+          render
+        else
+          redirect_to messages_path
+        end
+      }
       format.json { render :json => @message}
     end
   end

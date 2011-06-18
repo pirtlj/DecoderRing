@@ -17,18 +17,26 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   
   
-  has_many :direct_friends, :through => :direct_friendships, :conditions => "status => :approved", :source => :friend
-  has_many :inverse_friends, :through => :inverse_friendships, :conditions => "status = approved", :source => :user
+  has_many :direct_friends, :through => :direct_friendships, :conditions => "friendships.status = 'approved'", :source => :friend
+  has_many :inverse_friends, :through => :inverse_friendships, :conditions => "friendships.status = 'approved'", :source => :user
 
   has_many :requested_friendships, :class_name => "Friendship", :foreign_key => "friend_id", :conditions => "friendships.status = 'pending'"
   has_many :pending_friendships, :class_name => "Friendship", :foreign_key => "user_id", :conditions => "friendships.status = 'pending'"
 
+
+  
+  def friendships
+    direct_friendships.where(:status => "approved") | inverse_friendships.where(:status => "approved") 
+  end
+
+  
   def friends
     direct_friends | inverse_friends
   end
   
-  def friendships
-    direct_friendships.where(:status => "approved") | inverse_friendships.where(:status => "approved") 
+  
+  def authorized_messages
+    Message.where(:user_id => friends.map{|f| f.id} << self.id)
   end
   
   
