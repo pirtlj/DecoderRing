@@ -22,17 +22,18 @@ Step 1: Drag this link into your bookmark bar -> <a href="javascript:(function()
     <th></th>
   </tr>
 
-<% @messages.each do |message| %>
 
-  <tr>
-    <td><%= message.user_id %></td>
-    <td><%= message.value %></td>
-    <td><%= message.code %></td>
-    <td><%= link_to 'Show', message_url(message) %></td>
-    <td><%= link_to 'Edit', edit_message_path(message) %></td>
-    <td><%= link_to 'Destroy', message, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<% for message in @messages %>
+	<tr>
+	  <td><%= message.user_id %></td>
+	  <td><%= message.value %></td>
+	  <td><%= message.code %></td>
+	  <td><%= link_to 'Show', message_url(message) %></td>
+	  <td><%= link_to 'Edit', edit_message_path(message) %></td>
+	  <td><%= link_to 'Destroy', message, :confirm => 'Are you sure?', :method => :delete %></td>
+	</tr>
+<%end%>
+
 </table>
 
 <br />
